@@ -1,0 +1,32 @@
+﻿@page "/"
+
+<PageTitle>主页</PageTitle>
+
+<MudPaper Height="520px" Width="100%" Class="mt-0 pt-0">
+	<MudContainer Fixed="true" Class="p-2 px-4">
+		<MudText Typo="Typo.h6" GutterBottom="true" Class="mt-2 mb-4">欢迎使用小埋脚本App</MudText>
+
+		<MudTextField @bind-Value="UserKey" Label="密钥" Lines="6" Variant="Variant.Outlined"></MudTextField>
+
+		<MudToolBar Class="justify-center mt-4">
+			<MudButton Variant="Variant.Filled" Class="mr-5" Color="Color.Secondary" OnClick="SaveUserKey">保存密钥</MudButton>
+			<MudButton Variant="Variant.Filled" Class="ml-5" Color="Color.Primary" OnClick="RunScript">启动脚本</MudButton>
+		</MudToolBar>
+	</MudContainer>
+
+</MudPaper>
+
+@code {
+	public string? UserKey { get; set; }
+
+	public void SaveUserKey()
+	{
+		var a = 1;
+	}
+
+	public void RunScript()
+	{
+		var a = 1;
+	}
+}
+
