@@ -4,6 +4,8 @@ using Umaru.Core.OpenCV;
 using Umaru.Core.Http;
 using GoogleGson;
 using Point = System.Drawing.Point;
+using Umaru.Core.Store;
+using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace Umaru.Core
 {
@@ -114,6 +116,26 @@ namespace Umaru.Core
 		public static Point FindPic(int x, int y, int w, int h, string pic_name, float sim)
 		{
 			return SuperImage.FindPic(x, y, w, h, pic_name, sim);
+		}
+
+		/// <summary>
+		/// 获取存储的值
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public static SqliteModel GetStoreItem(string key)
+		{
+			return SuperSqlite.Instance.GetItem(key);
+		}
+
+		/// <summary>
+		/// 保存需要存储的值
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public static int SaveStoreItem(SqliteModel item)
+		{
+			return SuperSqlite.Instance.SaveItem(item);
 		}
 	}
 }

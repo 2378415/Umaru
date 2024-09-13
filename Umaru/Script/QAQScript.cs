@@ -9,6 +9,7 @@ using Umaru.Core.OpenCV;
 using System.Reflection;
 using Umaru.Core.Http;
 using Umaru.Core.Yolo;
+using Umaru.Core.Store;
 
 namespace Umaru.Script
 {
@@ -72,7 +73,14 @@ namespace Umaru.Script
 			//var yolo = new SuperYolo(model);
 			//var result = yolo.Detect(0, 0, 700, 1200);
 
-			Tools.Swipe(345, 999, 345, 323, 1000);
+			//Tools.Swipe(345, 999, 345, 323, 1000);
+			//var a = 1;
+
+
+			//var inst = SuperSqlite.Instance;
+			//inst.SaveItem(new SqliteModel() { Key = "User", Value = "Admin" });
+
+			//var data = inst.GetItem("User");
 			var a = 1;
 		}
 	}
