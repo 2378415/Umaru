@@ -63,14 +63,16 @@ namespace Umaru.Script
 
 			//var data = SuperHttp.Post("https://www.baidu.com/");
 
-			var model = new YoloModel("yolov5s_best.onnx", new Dictionary<int, string>()
-			{
-				{ 0, "self" },
-				{ 1, "target" },
-				{ 2, "foe" }
-			});
-			var yolo = new SuperYolo(model);
-			var result = yolo.Detect(0, 0, 700, 1200);
+			//var model = new YoloModel("yolov5s_best.onnx", new Dictionary<int, string>()
+			//{
+			//	{ 0, "self" },
+			//	{ 1, "target" },
+			//	{ 2, "foe" }
+			//});
+			//var yolo = new SuperYolo(model);
+			//var result = yolo.Detect(0, 0, 700, 1200);
+
+			Tools.Swipe(345, 999, 345, 323, 1000);
 			var a = 1;
 		}
 	}

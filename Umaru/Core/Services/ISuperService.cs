@@ -14,6 +14,12 @@ namespace Umaru.Core.Services
 
         void Tap(int x, int y);
 
-        void Toast(string message);
+		void Swipe(int x1, int y1, int x2, int y2, int duration = 500);
+
+		void Roll(int index, int count);
+
+	    void KeyEvent(string @event);
+
+		void Toast(string message);
     }
 }
