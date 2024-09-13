@@ -64,6 +64,7 @@ namespace Umaru
 			base.OnDestroy();
 			try
 			{
+				RootUtils.Destroy();
 				FloatingService.Stop();
 				System.Environment.Exit(0);
 			}
