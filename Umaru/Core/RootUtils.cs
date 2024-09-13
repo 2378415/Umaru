@@ -1,7 +1,9 @@
-﻿using Android.Util;
+﻿using Android.OS;
+using Android.Util;
 using Emgu.CV.Freetype;
 using Java.IO;
 using Java.Lang;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,10 +29,21 @@ namespace Umaru.Core
 
 		public static void Destroy()
 		{
-			suProcess?.WaitFor();
-			outputStream?.Close();
-			suProcess = null;
-			outputStream = null;
+			try
+			{
+				outputStream?.WriteBytes("exit\n");
+				outputStream?.Flush();
+				suProcess?.WaitFor();
+				suProcess?.ExitValue();
+
+				outputStream?.Close();
+				suProcess = null;
+				outputStream = null;
+			}
+			catch
+			{ 
+			
+			}
 		}
 
 		private static void TryBuildSuProcess()

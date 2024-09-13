@@ -42,6 +42,7 @@ namespace Umaru
 
 		readonly string[] Permissions =
 		{
+			"android.permission.ACCESS_SUPERUSER",
 			Android.Manifest.Permission.AccessNetworkState,
 			Android.Manifest.Permission.Internet,
 			Android.Manifest.Permission.BindAccessibilityService,
@@ -63,9 +64,9 @@ namespace Umaru
 		{
 			base.OnDestroy();
 			try
-			{
-				RootUtils.Destroy();
+			{	
 				FloatingService.Stop();
+				RootUtils.Destroy();
 				System.Environment.Exit(0);
 			}
 			catch
@@ -91,6 +92,9 @@ namespace Umaru
 			{
 				RawUtils.WriteLocalAsync();
 
+				// 检查并请求权限
+				CheckAndRequestPermissions();
+
 				if (RootUtils.IsRootAvailable())
 				{
 					Tools.Toast("已经具有 root 权限");
@@ -111,8 +115,8 @@ namespace Umaru
 					}
 				}
 
-				// 检查并请求权限
-				CheckAndRequestPermissions();
+				//// 检查并请求权限
+				//CheckAndRequestPermissions();
 
 				// 检查并请求 SYSTEM_ALERT_WINDOW 权限
 				if (!Settings.CanDrawOverlays(this))
