@@ -43,6 +43,7 @@ namespace Umaru
 		readonly string[] Permissions =
 		{
 			"android.permission.ACCESS_SUPERUSER",
+			Android.Manifest.Permission.BatteryStats,
 			Android.Manifest.Permission.AccessNetworkState,
 			Android.Manifest.Permission.Internet,
 			Android.Manifest.Permission.BindAccessibilityService,
@@ -64,7 +65,7 @@ namespace Umaru
 		{
 			base.OnDestroy();
 			try
-			{	
+			{
 				FloatingService.Stop();
 				RootUtils.Destroy();
 				System.Environment.Exit(0);
@@ -100,7 +101,7 @@ namespace Umaru
 					Tools.Toast("已经具有 root 权限");
 
 					//自动授权
-					var enserver = "settings put secure enabled_accessibility_services "+ "\"com.umaru.moper/crc6461fdc8ac6c9c5035.BarrierService\"" + "";
+					var enserver = "settings put secure enabled_accessibility_services " + "\"com.umaru.moper/crc6461fdc8ac6c9c5035.BarrierService\"" + "";
 					RootUtils.ExecuteShell(enserver);
 				}
 				else

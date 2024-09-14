@@ -13,15 +13,18 @@ namespace Umaru
 		{
 			var builder = MauiApp.CreateBuilder();
 			builder
-				.UseMauiApp<App>();
-				//.ConfigureFonts(fonts =>
-				//{
-				//	fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				//});
+				.UseMauiApp<App>()
+				.ConfigureFonts(fonts =>
+				{
+					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				});
 
-			// 注册 ISuperService 的实现
-			//builder.Services.AddSingleton<AccessibilityService, BarrierService>();
+			// 注册接口
+
+			//超级服务
 			builder.Services.AddSingleton<ISuperService, SuperService>();
+			//电池优化服务
+			builder.Services.AddSingleton<IBatteryOptimizationService, BatteryOptimizationService>();
 
 			//添加httpclient 忽略ssl
 			builder.Services.AddHttpClient("IgnoreSSL").ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
