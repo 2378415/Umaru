@@ -51,7 +51,6 @@ namespace Umaru.Core.Store
 			return _database.DeleteAsync(item).Result;
 		}
 
-
 		public static SuperSqlite Instance = new SuperSqlite(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SuperSqlite.db"));
 	}
 
