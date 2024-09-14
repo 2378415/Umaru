@@ -137,5 +137,23 @@ namespace Umaru.Core
 		{
 			return SuperSqlite.Instance.SaveItem(item);
 		}
+
+		/// <summary>
+		/// 返回首页
+		/// </summary>
+		/// <returns></returns>
+		public static void ToHomePage()
+		{
+			_superService.ToHomePage();
+		}
+
+		/// <summary>
+		/// 返回首页
+		/// </summary>
+		/// <returns></returns>
+		public static void ExitApp()
+		{
+			System.Environment.Exit(0);
+		}
 	}
 }

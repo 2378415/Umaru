@@ -21,5 +21,8 @@ namespace Umaru.Core.Services
 	    void KeyEvent(string @event);
 
 		void Toast(string message);
-    }
+
+		void ToHomePage();
+
+	}
 }

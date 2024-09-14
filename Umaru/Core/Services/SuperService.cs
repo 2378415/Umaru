@@ -106,5 +106,33 @@ namespace Umaru.Core.Services
 				Android.Widget.Toast.MakeText(context, message, ToastLength.Short).Show();
 			});
 		}
+
+		public void ToHomePage()
+		{
+			try
+			{
+				// 获取包名
+				string packageName = Application.Context.PackageName;
+				// 获取主活动的类名
+				string mainActivityClassName = "Umaru.MainActivity"; // 更新为你的主活动类名
+
+				// 构建 Intent
+				Intent intent = new Intent(Application.Context, typeof(MainActivity));
+				intent.SetAction(Intent.ActionMain);
+				intent.AddCategory(Intent.CategoryLauncher);
+				intent.AddFlags(ActivityFlags.ReorderToFront | ActivityFlags.ClearTop | ActivityFlags.SingleTop);
+
+				// 构建 PendingIntent
+				PendingIntent pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.UpdateCurrent);
+
+				// 发送 PendingIntent
+				pendingIntent.Send();
+			}
+			catch (Exception ex)
+			{
+				// 处理异常
+				System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+			}
+		}
 	}
 }

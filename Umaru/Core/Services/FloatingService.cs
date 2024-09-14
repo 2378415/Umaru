@@ -233,11 +233,11 @@ namespace Umaru.Core.Services
 						break;
 					case Resource.Drawable.home:
 						// 处理主页按钮点击事件
-						ToHome();
+						Tools.ToHomePage();
 						break;
 					case Resource.Drawable.stop:
 						// 处理停止按钮点击事件
-						System.Environment.Exit(0);
+						Tools.ExitApp();
 						break;
 					default:
 						// 处理未知按钮点击事件
@@ -246,33 +246,7 @@ namespace Umaru.Core.Services
 			}
 		}
 
-		public void ToHome()
-		{
-			try
-			{
-				// 获取包名
-				string packageName = Application.Context.PackageName;
-				// 获取主活动的类名
-				string mainActivityClassName = "Umaru.MainActivity"; // 更新为你的主活动类名
-
-				// 构建 Intent
-				Intent intent = new Intent(this, typeof(MainActivity));
-				intent.SetAction(Intent.ActionMain);
-				intent.AddCategory(Intent.CategoryLauncher);
-				intent.AddFlags(ActivityFlags.ReorderToFront | ActivityFlags.ClearTop | ActivityFlags.SingleTop);
-
-				// 构建 PendingIntent
-				PendingIntent pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.UpdateCurrent);
-
-				// 发送 PendingIntent
-				pendingIntent.Send();
-			}
-			catch (Exception ex)
-			{
-				// 处理异常
-				System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
-			}
-		}
+	
 
 		private void ShowMenu()
 		{
