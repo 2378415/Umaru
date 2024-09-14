@@ -233,7 +233,7 @@ namespace Umaru.Core.Services
 						break;
 					case Resource.Drawable.home:
 						// 处理主页按钮点击事件
-						Tools.ToHomePage();
+						Tools.ToHome();
 						break;
 					case Resource.Drawable.stop:
 						// 处理停止按钮点击事件

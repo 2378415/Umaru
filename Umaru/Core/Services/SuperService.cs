@@ -107,7 +107,7 @@ namespace Umaru.Core.Services
 			});
 		}
 
-		public void ToHomePage()
+		public void ToHome()
 		{
 			try
 			{

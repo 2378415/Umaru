@@ -22,7 +22,7 @@ namespace Umaru.Core.Services
 
 		void Toast(string message);
 
-		void ToHomePage();
+		void ToHome();
 
 	}
 }

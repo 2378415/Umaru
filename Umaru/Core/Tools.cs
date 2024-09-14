@@ -142,9 +142,9 @@ namespace Umaru.Core
 		/// 返回首页
 		/// </summary>
 		/// <returns></returns>
-		public static void ToHomePage()
+		public static void ToHome()
 		{
-			_superService.ToHomePage();
+			_superService.ToHome();
 		}
 
 		/// <summary>
@@ -154,6 +154,15 @@ namespace Umaru.Core
 		public static void ExitApp()
 		{
 			System.Environment.Exit(0);
+		}
+
+		/// <summary>
+		/// 后台运行App
+		/// </summary>
+		public static void ToBack()
+		{
+			var activity = Platform.CurrentActivity;
+			activity?.MoveTaskToBack(true);
 		}
 	}
 }
