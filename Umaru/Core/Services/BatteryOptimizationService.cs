@@ -33,7 +33,7 @@ namespace Umaru.Core.Services
 			Battery.BatteryInfoChanged -= OnBatteryInfoChanged;
 		}
 
-		private void OnBatteryInfoChanged(object sender, BatteryInfoChangedEventArgs e)
+		private void OnBatteryInfoChanged(object? sender, BatteryInfoChangedEventArgs e)
 		{
 			var args = new BatteryOptimizationEventArgs
 			{
