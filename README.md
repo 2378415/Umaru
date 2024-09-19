@@ -1,15 +1,15 @@
 # Umaru
 Umaru 是一个脚本框架，基于.Net Maui开发，目前仅支持Android平台
 ## 开发进度
-- [√] 基础框架搭建
-- [√] 脚本执行器
-- [√] 文件系统-释放资源文件
-- [√] 本地存储-SQLite
-- [√] Yolo支持-YoloV5
-- [√] 节点视图-NodeQuery
-- [√] 找图功能-FindPic
-- [X] 找色功能
-- [X] OCR功能
+- [x] 基础框架搭建
+- [x] 脚本执行器
+- [x] 文件系统-释放资源文件
+- [x] 本地存储-SQLite
+- [x] Yolo支持-YoloV5
+- [x] 节点视图-NodeQuery
+- [x] 找图功能-FindPic
+- [ ] 找色功能
+- [ ] OCR功能
 ## 使用说明
 1. 下载项目源码，解压
 2. 使用VS2022打开Umaru.sln，编译项目
