@@ -1,5 +1,4 @@
-﻿
-using Umaru.Core;
+﻿using Umaru.Core;
 using Umaru.Core.Node;
 
 namespace Umaru.Script
