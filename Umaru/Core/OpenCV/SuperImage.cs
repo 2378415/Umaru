@@ -182,7 +182,6 @@ namespace Umaru.Core.OpenCV
 
                     // 将结果图像保存到本地
                     SaveToFile(screenImage.ToBitmap(), "MatchResult.png");
-
                     return new Point(maxLoc.X + x, maxLoc.Y + y);
                 }
             }
@@ -190,7 +189,7 @@ namespace Umaru.Core.OpenCV
             return PointEmpty;
         }
 
-        private static Image<Gray, byte> CreateMask(Image<Bgr, byte> image, Bgr transparentColor)
+		private static Image<Gray, byte> CreateMask(Image<Bgr, byte> image, Bgr transparentColor)
         {
             Image<Gray, byte> mask = new Image<Gray, byte>(image.Width, image.Height, new Gray(1));
             for (int y = 0; y < image.Height; y++)
