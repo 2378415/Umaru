@@ -110,12 +110,6 @@
       <Folder Include="Resources\drawable\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <MauiAsset Update="Resources\Raw\test_avatar.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </MauiAsset>
-    </ItemGroup>
-
     <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionUmaruHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

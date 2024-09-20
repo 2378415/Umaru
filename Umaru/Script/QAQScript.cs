@@ -8,9 +8,7 @@ namespace Umaru.Script
 		public override void Run()
 		{
 			base.Run();
-
-
-
+			Tools.Toast("脚本启动");
 			ScriptMain();
 
 		}
@@ -24,23 +22,23 @@ namespace Umaru.Script
 
 		public void CloseAll()
 		{
-			Tools.CloseApp("indi.sky.fireworks");
-			Tools.CloseApp("com.netease.sky");
+			//Tools.CloseApp("indi.sky.fireworks");
+			//Tools.CloseApp("com.netease.sky");
 		}
 
 		public void ScriptMain()
 		{
 
-			var nodes = NodeQuery.Pkg("indi.sky.fireworks").Id("indi.sky.fireworks:id/hot_frame").ToList();
-			if (nodes.Count > 0)
-			{
-				Thread.Sleep(500);
-				nodes.FirstOrDefault()?.Tap();
-				Tools.Toast("找到啦");
-			}
+			//var nodes = NodeQuery.Pkg("indi.sky.fireworks").Id("indi.sky.fireworks:id/hot_frame").ToList();
+			//if (nodes.Count > 0)
+			//{
+			//	Thread.Sleep(500);
+			//	nodes.FirstOrDefault()?.Tap();
+			//	Tools.Toast("找到啦");
+			//}
 
 
-			var a = 1;
+			//var a = 1;
 		}
 	}
 }
