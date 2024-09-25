@@ -91,6 +91,7 @@ namespace Umaru.Core.Services
 		{
 			try
 			{
+				FloatingService.Stop();
 				// 获取包名
 				string packageName = Application.Context.PackageName;
 				// 获取主活动的类名

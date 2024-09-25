@@ -39,7 +39,7 @@ namespace Umaru.Script
 
 
 			var ocr = new PaddleOCR();
-			var result = ocr.Recognize(87, 458, 143 - 87, 496 - 458);
+			var result = ocr.Recognize(43, 724, 173 - 43, 760 - 724);
 			Tools.Toast(result);
 		}
 	}
