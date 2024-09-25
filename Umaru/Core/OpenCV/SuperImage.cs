@@ -102,7 +102,7 @@ namespace Umaru.Core.OpenCV
 		public static Bitmap Capture(int x, int y, int w, int h)
         {
             var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, $"Capture_{Guid.NewGuid()}.png");
-            Capture(tempPath);
+            RootUtils.Screencap(tempPath);
 
             if (File.Exists(tempPath))
             {    // Open the source file

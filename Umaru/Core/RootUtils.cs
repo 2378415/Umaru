@@ -3,6 +3,7 @@ using Android.Util;
 using Emgu.CV.Freetype;
 using Java.IO;
 using Java.Lang;
+using Kotlin.System;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
@@ -72,8 +73,25 @@ namespace Umaru.Core
 			{
 				TryBuildSuProcess();
 
+				// 添加一个特殊的标记命令
+				string endMarker = "END_OF_COMMAND";
 				outputStream?.WriteBytes(command + "\n");
+				outputStream?.WriteBytes($"echo {endMarker}\n");
 				outputStream?.Flush();
+
+				// 读取输出直到看到标记
+				using (var reader = new BufferedReader(new InputStreamReader(suProcess.InputStream)))
+				{
+					string line;
+					while ((line = reader.ReadLine()) != null)
+					{
+						if (line.Contains(endMarker))
+						{
+							break;
+						}
+					}
+				}
+
 				return true;
 			}
 			catch (IOException e)
@@ -115,6 +133,11 @@ namespace Umaru.Core
 			{
 				return string.Empty;
 			}
+		}
+
+		public static bool Screencap(string path)
+		{
+			return Execute($"screencap -p {System.IO.Path.Combine(FileSystem.AppDataDirectory, path)}");
 		}
 
 		public static bool TryGetRootAccess()
