@@ -56,39 +56,6 @@ namespace Umaru.Core.OpenCV
             }
         }
 
-        private static Bitmap ReadFileByRoot(string path)
-        {
-            try
-            {
-                var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, path);
-                // 读取文件内容的命令
-                string readCommand = $"cat {tempPath}";
-
-                // 使用 su 命令执行读取文件内容
-                Process process = new Process();
-                process.StartInfo.FileName = "su";
-                process.StartInfo.Arguments = "-c \"" + readCommand + "\"";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-
-                // 获取文件内容
-                using (var memoryStream = new MemoryStream())
-                {
-                    process.StandardOutput.BaseStream.CopyTo(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    return BitmapFactory.DecodeStream(memoryStream);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception: " + ex.Message);
-                return null;
-            }
-        }
-
 		public static byte[] BitmapToByteArray(Bitmap bitmap)
 		{
 			using (var stream = new MemoryStream())
@@ -106,7 +73,7 @@ namespace Umaru.Core.OpenCV
 
             if (File.Exists(tempPath))
             {    // Open the source file
-                var img = ReadFileByRoot(tempPath);
+                var img =RootUtils.ReadImg(tempPath);
 
                 var croppedImg = Bitmap.CreateBitmap(img, x, y, w, h);
 				File.Delete(tempPath);
@@ -114,40 +81,6 @@ namespace Umaru.Core.OpenCV
             }
 
             return null;
-        }
-
-        public static void Capture(string path)
-        {
-            try
-            {
-                // 截图命令
-                string command = $"/system/bin/screencap -p {System.IO.Path.Combine(FileSystem.AppDataDirectory, path)}";
-
-                // 使用 su 命令执行截图
-                Process process = new Process();
-                process.StartInfo.FileName = "su";
-                process.StartInfo.Arguments = "-c \"" + command + "\"";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-
-                // 等待命令执行完成
-                process.WaitForExit();
-
-                // 检查命令执行结果
-                string output = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                if (!string.IsNullOrEmpty(error))
-                {
-                    Debug.WriteLine("Exception: " + error);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception: " + ex.Message);
-            }
         }
 
         /// <summary>
@@ -163,7 +96,7 @@ namespace Umaru.Core.OpenCV
         public static Point FindPic(int x, int y, int w, int h, string pic_name, float sim)
         {
             var screen = Capture(x, y, w, h);
-            var pic = ReadFileByRoot(pic_name);
+            var pic = RootUtils.ReadImg(pic_name);
 
             // 将 Bitmap 转换为 Emgu.CV 的 Image<Bgr, Byte>
             Image<Bgr, byte> screenImage = screen.ToImage<Bgr, byte>();

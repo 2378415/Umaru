@@ -168,7 +168,7 @@ namespace Umaru
 		bool IsAccessibilityEnabled()
 		{
 			string command = "settings get secure enabled_accessibility_services";
-			var msg = RootUtils.ExecuteShell(command);
+			var msg = RootUtils.Execute(command);
 			if (msg.Contains("BarrierService") && msg.Contains(PackageName)) return true;
 			return false;
 		}

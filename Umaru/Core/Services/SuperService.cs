@@ -56,45 +56,25 @@ namespace Umaru.Core.Services
 		public void Tap(int x, int y)
 		{
 			string command = $"input tap {x} {y}";
-			bool success = RootUtils.Execute(command);
-
-			if (!success)
-			{
-				System.Diagnostics.Debug.WriteLine("Error executing tap command with root.");
-			}
+			RootUtils.Execute(command);
 		}
 
 		public void Swipe(int x1, int y1, int x2, int y2, int duration = 500)
 		{
 			string command = $"input swipe {x1} {y1} {x2} {y2} {duration}";
-			bool success = RootUtils.Execute(command);
-
-			if (!success)
-			{
-				System.Diagnostics.Debug.WriteLine("Error executing swipe command with root.");
-			}
+			RootUtils.Execute(command);
 		}
 
 		public void Roll(int index, int count)
 		{
 			string command = $"input roll {index} {count}";
-			bool success = RootUtils.Execute(command);
-
-			if (!success)
-			{
-				System.Diagnostics.Debug.WriteLine("Error executing roll command with root.");
-			}
+			RootUtils.Execute(command);
 		}
 
 		public void KeyEvent(string @event)
 		{
 			string command = $"input keyevent {@event}";
-			bool success = RootUtils.Execute(command);
-
-			if (!success)
-			{
-				System.Diagnostics.Debug.WriteLine("Error executing keyevent command with root.");
-			}
+			RootUtils.Execute(command);
 		}
 
 

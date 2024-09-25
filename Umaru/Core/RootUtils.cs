@@ -1,4 +1,5 @@
-﻿using Android.OS;
+﻿using Android.Graphics;
+using Android.OS;
 using Android.Util;
 using Emgu.CV.Freetype;
 using Java.IO;
@@ -11,9 +12,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exception = Java.Lang.Exception;
 using IOException = Java.IO.IOException;
 using Process = Java.Lang.Process;
-using StringBuilder = Java.Lang.StringBuilder;
+using StringBuilder = System.Text.StringBuilder;
 
 namespace Umaru.Core
 {
@@ -67,7 +69,7 @@ namespace Umaru.Core
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns></returns>
-		public static bool Execute(string command)
+		public static string Execute(string command)
 		{
 			try
 			{
@@ -80,6 +82,7 @@ namespace Umaru.Core
 				outputStream?.Flush();
 
 				// 读取输出直到看到标记
+				StringBuilder output = new StringBuilder();
 				using (var reader = new BufferedReader(new InputStreamReader(suProcess.InputStream)))
 				{
 					string line;
@@ -89,55 +92,47 @@ namespace Umaru.Core
 						{
 							break;
 						}
+						output.AppendLine(line);
 					}
 				}
 
-				return true;
+				return output.ToString();
 			}
 			catch (IOException e)
 			{
 				e.PrintStackTrace();
-				return false;
-			}
-		}
-
-		/// <summary>
-		/// 执行shell命令，不推荐，因为没有复用su进程，效率低
-		/// </summary>
-		/// <param name="command"></param>
-		/// <returns></returns>
-		public static string ExecuteShell(string command)
-		{
-			try
-			{
-				var processInfo = new ProcessStartInfo("/system/bin/sh", "-c \"su -c '" + command + "'\"")
-				{
-					RedirectStandardOutput = true,
-					UseShellExecute = false,
-					CreateNoWindow = true
-				};
-
-				var process = new System.Diagnostics.Process
-				{
-					StartInfo = processInfo
-				};
-
-				process.Start();
-
-				string output = process.StandardOutput.ReadToEnd();
-
-				process.WaitForExit();
-				return output;
-			}
-			catch
-			{
 				return string.Empty;
 			}
 		}
 
-		public static bool Screencap(string path)
+		public static string Screencap(string path)
 		{
 			return Execute($"screencap -p {System.IO.Path.Combine(FileSystem.AppDataDirectory, path)}");
+		}
+
+		public static Bitmap ReadImg(string path)
+		{
+			try
+			{
+
+				var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, path);
+				// 读取文件内容的命令
+				string readCommand = $"cat {tempPath} | base64";
+				string fileContent = Execute(readCommand);
+
+				// 将Base64字符串转换为字节数组
+				byte[] fileBytes = Convert.FromBase64String(fileContent);
+
+				// 使用字节数组创建 Bitmap
+				using (var memoryStream = new MemoryStream(fileBytes))
+				{
+					return BitmapFactory.DecodeStream(memoryStream);
+				}
+			}
+			catch (Exception ex)
+			{
+				return null;
+			}
 		}
 
 		public static bool TryGetRootAccess()
