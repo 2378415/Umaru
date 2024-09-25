@@ -86,7 +86,7 @@ namespace Umaru.Script
 }
 ```
 
-## OCR示例
+## Yolo示例
 ```csharp
 	//参数1 模型 参数2 模型对应的字典
     var model = new YoloModel("xxx.onnx",new Dictionary<int, string> { });
