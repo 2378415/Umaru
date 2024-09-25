@@ -37,6 +37,7 @@ namespace Umaru.Script
 
 			//yolo.Detect(87, 458, 143 - 87, 496 - 458);
 
+
 			var ocr = new PaddleOCR();
 			var result = ocr.Recognize(87, 458, 143 - 87, 496 - 458);
 			Tools.Toast(result);

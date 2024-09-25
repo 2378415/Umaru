@@ -76,11 +76,11 @@ namespace Umaru.Core
 				TryBuildSuProcess();
 
 				// 添加一个特殊的标记命令
-				string endMarker = "END_OF_COMMAND";
+				string endMarker = "UMARU_END_SHELL";
 				outputStream?.WriteBytes(command + "\n");
 				outputStream?.WriteBytes($"echo {endMarker}\n");
 				outputStream?.Flush();
-
+				
 				// 读取输出直到看到标记
 				StringBuilder output = new StringBuilder();
 				using (var reader = new BufferedReader(new InputStreamReader(suProcess.InputStream)))
