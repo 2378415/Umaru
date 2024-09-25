@@ -89,7 +89,17 @@ namespace Umaru.Core.OpenCV
             }
         }
 
-        public static Bitmap Capture(int x, int y, int w, int h)
+		public static byte[] BitmapToByteArray(Bitmap bitmap)
+		{
+			using (var stream = new MemoryStream())
+			{
+				// 将 Bitmap 压缩为 PNG 格式并写入内存流
+				bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+				return stream.ToArray();
+			}
+		}
+
+		public static Bitmap Capture(int x, int y, int w, int h)
         {
             var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, $"Capture_{Guid.NewGuid()}.png");
             Capture(tempPath);

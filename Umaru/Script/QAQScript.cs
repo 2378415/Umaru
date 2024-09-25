@@ -1,5 +1,6 @@
 ﻿using Umaru.Core;
 using Umaru.Core.Node;
+using Umaru.Core.OCR;
 
 namespace Umaru.Script
 {
@@ -29,16 +30,9 @@ namespace Umaru.Script
 		public void ScriptMain()
 		{
 
-			//var nodes = NodeQuery.Pkg("indi.sky.fireworks").Id("indi.sky.fireworks:id/hot_frame").ToList();
-			//if (nodes.Count > 0)
-			//{
-			//	Thread.Sleep(500);
-			//	nodes.FirstOrDefault()?.Tap();
-			//	Tools.Toast("找到啦");
-			//}
-
-
-			//var a = 1;
+			var ocr = new PaddleOCR();
+			var result = ocr.Recognize(87, 458, 143 - 87, 496 - 458);
+			var a = 1;
 		}
 	}
 }

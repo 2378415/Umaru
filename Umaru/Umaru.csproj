@@ -94,6 +94,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Clipper2" Version="1.4.0" />
         <PackageReference Include="Emgu.CV" Version="4.9.0.5494" />
         <PackageReference Include="Emgu.CV.runtime.maui.mini.android" Version="4.9.0.5494" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
@@ -103,6 +104,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
         <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
         <PackageReference Include="MudBlazor" Version="7.8.0" />
+        <PackageReference Include="SkiaSharp" Version="2.88.8" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="2.88.8" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
 
