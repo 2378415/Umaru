@@ -8,8 +8,8 @@ Umaru 是一个脚本框架，基于.Net Maui开发，目前仅支持Android平�
 - [x] Yolo支持-YoloV5
 - [x] 节点视图-NodeQuery
 - [x] 找图功能-FindPic
+- [x] OCR功能-PaddleOCR-v4
 - [ ] 找色功能
-- [ ] OCR功能
 ## 使用说明
 1. 下载项目源码，解压
 2. 使用VS2022打开Umaru.sln，编译项目
@@ -84,4 +84,17 @@ namespace Umaru.Script
         }
     }
 }
+```
+
+## OCR示例
+```csharp
+	//参数1 模型 参数2 模型对应的字典
+    var model = new YoloModel("xxx.onnx",new Dictionary<int, string> { });
+    var yolo = new SuperYolo(model);
+```
+
+## OCR示例
+```csharp
+	var ocr = new PaddleOCR();
+	var result = ocr.Recognize(87, 458, 143 - 87, 496 - 458);
 ```
