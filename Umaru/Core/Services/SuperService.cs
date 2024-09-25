@@ -40,17 +40,19 @@ namespace Umaru.Core.Services
 
 		public void CloseApp(string packageName)
 		{
-			try
-			{
-				// 使用 root 权限执行命令
-				var process = Runtime.GetRuntime().Exec(new string[] { "su", "-c", "am force-stop " + packageName });
-				process.WaitFor();
-			}
-			catch (Exception ex)
-			{
-				// 处理异常
-				System.Diagnostics.Debug.WriteLine("Error closing app: " + ex.Message);
-			}
+			//try
+			//{
+			//	// 使用 root 权限执行命令
+			//	var process = Runtime.GetRuntime().Exec(new string[] { "su", "-c", "am force-stop " + packageName });
+			//	process.WaitFor();
+			//}
+			//catch (Exception ex)
+			//{
+			//	// 处理异常
+			//	System.Diagnostics.Debug.WriteLine("Error closing app: " + ex.Message);
+			//}
+
+			RootUtils.Execute($"am force-stop {packageName}");
 		}
 
 		public void Tap(int x, int y)

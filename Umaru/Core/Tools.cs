@@ -153,6 +153,7 @@ namespace Umaru.Core
 		/// <returns></returns>
 		public static void ExitApp()
 		{
+			CloseApp("com.umaru.moper");
 			System.Environment.Exit(0);
 		}
 
