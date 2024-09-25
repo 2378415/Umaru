@@ -72,16 +72,7 @@ namespace Umaru
 			}
 			catch
 			{
-
-			}
-
-			try
-			{
 				System.Environment.Exit(0);
-			}
-			catch
-			{
-
 			}
 		}
 
