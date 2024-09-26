@@ -1,6 +1,7 @@
 ﻿using Android.Graphics;
 using Android.OS;
 using Android.Util;
+using Android.Views.Accessibility;
 using Emgu.CV.Freetype;
 using Java.IO;
 using Java.Lang;
@@ -109,6 +110,56 @@ namespace Umaru.Core
 		{
 			return Execute($"screencap -p {System.IO.Path.Combine(FileSystem.AppDataDirectory, path)}");
 		}
+
+		/// <summary>
+		/// 获取视图节点 - 未开发完成
+		/// </summary>
+		/// <returns></returns>
+	    public static string GetNodes()
+		{
+			var path = System.IO.Path.Combine(FileSystem.AppDataDirectory, "node_dump.xml");
+			string command = $"uiautomator dump {path}"; // 获取当前屏幕上的所有视图节点
+			string result = Execute(command);
+			var xml = ReadFlie("node_dump.xml");
+			return xml;
+		}
+
+		/// <summary>
+		/// 读取文件内容
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string ReadFlie(string path)
+		{
+			try
+			{
+				var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, path);
+				// 读取文件内容的命令
+				string readCommand = $"cat {tempPath} | base64";
+				string fileContent = Execute(readCommand);
+
+				//// 将Base64字符串转换为字节数组
+				var fileBytes = Convert.FromBase64String(fileContent);
+				var text = Encoding.UTF8.GetString(fileBytes);
+				return text;
+			}
+			catch
+			{
+				return string.Empty;
+			}
+		}
+
+		//private static List<AccessibilityNodeInfo> ParseAccessibilityNodeInfoFromXml(string xml)
+		//{
+		//	var nodes = new List<AccessibilityNodeInfo>();
+
+		//	var doc = new System.Xml.XmlDocument();
+		//	doc.LoadXml(xml);
+
+		//	var nodeList = doc.SelectNodes("//node");
+		
+		//	return nodes;
+		//}
 
 		public static Bitmap? ReadImg(string path)
 		{
