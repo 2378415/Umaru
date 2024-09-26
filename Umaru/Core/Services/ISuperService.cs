@@ -8,7 +8,9 @@ namespace Umaru.Core.Services
 {
     public interface ISuperService
     {
-        void LaunchApp(string packageName);
+		string? GetPackageName();
+
+		void LaunchApp(string packageName);
 
         void CloseApp(string packageName);
 

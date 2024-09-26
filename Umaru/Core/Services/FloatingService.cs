@@ -32,17 +32,17 @@ namespace Umaru.Core.Services
 	[Service(Enabled = true, Exported = false)]
 	public class FloatingService : Service
 	{
-		private IWindowManager _windowManager;
-		private View _avatarView;
-		private WindowManagerLayoutParams _layoutParams;
+		private IWindowManager? _windowManager;
+		private View? _avatarView;
+		private WindowManagerLayoutParams? _layoutParams;
 		private float _initialX;
 		private float _initialY;
 		private float _touchX;
 		private float _touchY;
-		private LinearLayout _menuLayout;
+		private LinearLayout? _menuLayout;
 		private bool _isMenuLayoutVisible;
-		private DisplayMetrics _displayMetrics = null;
-		private ScreenOrientationReceiver _receiver;
+		private DisplayMetrics? _displayMetrics = null;
+		private ScreenOrientationReceiver? _receiver;
 
 		public static bool IsRun
 		{
@@ -50,10 +50,6 @@ namespace Umaru.Core.Services
 			set;
 		} = false;
 
-		public override IBinder OnBind(Intent intent)
-		{
-			return null;
-		}
 
 		public override void OnDestroy()
 		{
@@ -61,13 +57,13 @@ namespace Umaru.Core.Services
 			// 移除并销毁菜单视图
 			if (_menuLayout != null && _menuLayout.IsAttachedToWindow)
 			{
-				_windowManager.RemoveView(_menuLayout);
+				_windowManager?.RemoveView(_menuLayout);
 				_menuLayout = null;
 			}
 
 			if (_avatarView != null && _avatarView.IsAttachedToWindow)
 			{
-				_windowManager.RemoveView(_avatarView);
+				_windowManager?.RemoveView(_avatarView);
 				_avatarView = null;
 			}
 
@@ -112,7 +108,7 @@ namespace Umaru.Core.Services
 			menuY = menuY > h ? h : menuY;
 
 			// 判断屏幕方向
-			bool isLandscape = Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape;
+			bool isLandscape = Resources?.Configuration?.Orientation == Android.Content.Res.Orientation.Landscape;
 			var offset = (isLandscape ? 0 : 50) + 320;
 
 			// 如果存在菜单，则菜单的 Y 坐标应该比头像的 Y 坐标低
@@ -127,7 +123,8 @@ namespace Umaru.Core.Services
 		public void LoadDisplayMetrics()
 		{
 			_displayMetrics = new DisplayMetrics();
-			_windowManager.DefaultDisplay.GetMetrics(_displayMetrics);
+
+			_windowManager?.DefaultDisplay?.GetMetrics(_displayMetrics);
 		}
 
 		public void BuildAvatar()
@@ -151,7 +148,7 @@ namespace Umaru.Core.Services
 			_layoutParams.Y = 100;
 
 			_windowManager = GetSystemService(WindowService).JavaCast<IWindowManager>();
-			_windowManager.AddView(_avatarView, _layoutParams);
+			_windowManager?.AddView(_avatarView, _layoutParams);
 
 			_avatarView.Touch += OnTouch;
 			_avatarView.Click += OnMenuClick;
@@ -161,49 +158,61 @@ namespace Umaru.Core.Services
 		{
 			if (_avatarView != null)
 			{
-				_layoutParams.X = GetMenuX(_layoutParams.X);
-				_layoutParams.Y = GetMenuY(_layoutParams.Y);
+				if (_layoutParams != null)
+				{
+					_layoutParams.X = GetMenuX(_layoutParams.X);
+					_layoutParams.Y = GetMenuY(_layoutParams.Y);
+				}
 
-				_windowManager.UpdateViewLayout(_avatarView, _layoutParams);
+				_windowManager?.UpdateViewLayout(_avatarView, _layoutParams);
 			}
 
 			// 更新 _buttonLayout 的位置
 			if (_isMenuLayoutVisible && _menuLayout != null)
 			{
-				var menuLayoutParams = (WindowManagerLayoutParams)_menuLayout.LayoutParameters;
-				menuLayoutParams.X = _layoutParams.X > 0 ? (_layoutParams.X + 10) : 10;
-				menuLayoutParams.Y = _layoutParams.Y + 100; // 调整 Y 位置以显示在浮动视图下方
-				_windowManager.UpdateViewLayout(_menuLayout, menuLayoutParams);
+				var menuLayoutParams = _menuLayout.LayoutParameters as WindowManagerLayoutParams;
+				if (menuLayoutParams != null && _layoutParams != null)
+				{
+					menuLayoutParams.X = _layoutParams.X > 0 ? (_layoutParams.X + 10) : 10;
+					menuLayoutParams.Y = _layoutParams.Y + 100; // 调整 Y 位置以显示在浮动视图下方
+				}
+				_windowManager?.UpdateViewLayout(_menuLayout, menuLayoutParams);
 			}
 
 		}
 
 		private bool _isDragging;
-		private void OnTouch(object sender, View.TouchEventArgs e)
+		private void OnTouch(object? sender, View.TouchEventArgs e)
 		{
 			LoadDisplayMetrics();
-			switch (e.Event.Action)
+			switch (e.Event?.Action)
 			{
 				case MotionEventActions.Down:
-					_initialX = _layoutParams.X;
-					_initialY = _layoutParams.Y;
+					if (_layoutParams != null)
+					{
+						_initialX = _layoutParams.X;
+						_initialY = _layoutParams.Y;
+					}
 					_touchX = e.Event.RawX;
 					_touchY = e.Event.RawY;
 					_isDragging = false;
 					return;
 				case MotionEventActions.Move:
-					_layoutParams.X = (int)(_initialX + (e.Event.RawX - _touchX));
-					_layoutParams.Y = (int)(_initialY + (e.Event.RawY - _touchY));
+					if (_layoutParams != null)
+					{
+						_layoutParams.X = (int)(_initialX + (e.Event.RawX - _touchX));
+						_layoutParams.Y = (int)(_initialY + (e.Event.RawY - _touchY));
+					}
 					ReBuildMenu();
 					_isDragging = true;
 					return;
 				case MotionEventActions.Up:
-					if (!_isDragging) _avatarView.PerformClick();
+					if (!_isDragging) _avatarView?.PerformClick();
 					return;
 			}
 		}
 
-		private void OnMenuClick(object sender, EventArgs e)
+		private void OnMenuClick(object? sender, EventArgs e)
 		{
 			if (_isMenuLayoutVisible)
 			{
@@ -215,11 +224,11 @@ namespace Umaru.Core.Services
 			}
 		}
 
-		private void OnMenuItemClick(object sender, EventArgs e)
+		private void OnMenuItemClick(object? sender, EventArgs e)
 		{
 			if (sender is ImageView button)
 			{
-				int drawableId = (int)button.Tag;
+				int drawableId = button.Tag == null ? 0 : (int)button.Tag;
 
 				switch (drawableId)
 				{
@@ -246,7 +255,7 @@ namespace Umaru.Core.Services
 			}
 		}
 
-	
+
 
 		private void ShowMenu()
 		{
@@ -254,8 +263,8 @@ namespace Umaru.Core.Services
 			{
 				if (!_isMenuLayoutVisible)
 				{
-					var tempmenuLayoutParams = (WindowManagerLayoutParams)_menuLayout.LayoutParameters;
-					_windowManager.AddView(_menuLayout, tempmenuLayoutParams);
+					var tempmenuLayoutParams = _menuLayout.LayoutParameters as WindowManagerLayoutParams;
+					_windowManager?.AddView(_menuLayout, tempmenuLayoutParams);
 					_isMenuLayoutVisible = true;
 				}
 
@@ -293,12 +302,13 @@ namespace Umaru.Core.Services
 				WindowManagerFlags.NotFocusable,
 				Format.Translucent)
 			{
+
 				Gravity = GravityFlags.Top | GravityFlags.Left,
-				X = _layoutParams.X > 0 ? (_layoutParams.X + 10) : 10, // Adjust X position to center relative to _floatingView
-				Y = _layoutParams.Y + 100 // Adjust Y position to show below the floating view
+				X = _layoutParams == null ? 0 : _layoutParams.X > 0 ? (_layoutParams.X + 10) : 10, // Adjust X position to center relative to _floatingView
+				Y = _layoutParams == null ? 0 : _layoutParams.Y + 100 // Adjust Y position to show below the floating view
 			};
 
-			_windowManager.AddView(_menuLayout, menuLayoutParams);
+			_windowManager?.AddView(_menuLayout, menuLayoutParams);
 			_isMenuLayoutVisible = true;
 
 			ReBuildMenu();
@@ -308,7 +318,7 @@ namespace Umaru.Core.Services
 		{
 			if (_menuLayout != null)
 			{
-				_windowManager.RemoveView(_menuLayout);
+				_windowManager?.RemoveView(_menuLayout);
 				_isMenuLayoutVisible = false;
 			}
 		}
@@ -368,9 +378,9 @@ namespace Umaru.Core.Services
 				_service = service;
 			}
 
-			public override void OnReceive(Context context, Intent intent)
+			public override void OnReceive(Context? context, Intent? intent)
 			{
-				if (intent.Action == Intent.ActionConfigurationChanged)
+				if (intent?.Action == Intent.ActionConfigurationChanged)
 				{
 					// 处理屏幕方向变化
 					_service.OnScreenOrientationChanged();
@@ -404,8 +414,8 @@ namespace Umaru.Core.Services
 				}
 			}
 			catch
-			{ 
-			
+			{
+
 			}
 		}
 
@@ -422,9 +432,14 @@ namespace Umaru.Core.Services
 				}
 			}
 			catch
-			{ 
-			
+			{
+
 			}
+		}
+
+		public override IBinder? OnBind(Intent? intent)
+		{
+			return null;
 		}
 	}
 }

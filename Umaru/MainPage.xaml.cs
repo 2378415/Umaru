@@ -2,16 +2,19 @@
 
 namespace Umaru
 {
-    public partial class MainPage : ContentPage
-    {
-		private readonly IBatteryOptimizationService _batteryOptimizationService;
+	public partial class MainPage : ContentPage
+	{
+		private readonly IBatteryOptimizationService? _batteryOptimizationService;
 
 		public MainPage()
 		{
 			InitializeComponent();
 			_batteryOptimizationService = ServiceLocator.Get<IBatteryOptimizationService>();
-			_batteryOptimizationService.BatteryStatusChanged += OnBatteryStatusChanged;
-			_batteryOptimizationService.StartMonitoring();
+			if (_batteryOptimizationService != null)
+			{
+				_batteryOptimizationService.BatteryStatusChanged += OnBatteryStatusChanged;
+				_batteryOptimizationService.StartMonitoring();
+			}
 		}
 
 		private void OnBatteryStatusChanged(object? sender, BatteryOptimizationEventArgs e)
@@ -26,7 +29,7 @@ namespace Umaru
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			_batteryOptimizationService.StopMonitoring();
+			_batteryOptimizationService?.StopMonitoring();
 		}
 	}
 }

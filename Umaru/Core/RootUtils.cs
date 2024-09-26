@@ -21,7 +21,7 @@ namespace Umaru.Core
 {
 	public static class RootUtils
 	{
-		private static readonly Runtime runtime = Runtime.GetRuntime();
+		private static readonly Runtime? runtime = Runtime.GetRuntime();
 		private static Process? suProcess;
 		private static DataOutputStream? outputStream;
 
@@ -55,8 +55,8 @@ namespace Umaru.Core
 
 			try
 			{
-				suProcess = runtime.Exec("su");
-				outputStream = new DataOutputStream(suProcess.OutputStream);
+				suProcess = runtime?.Exec("su");
+				outputStream = new DataOutputStream(suProcess?.OutputStream);
 			}
 			catch (IOException e)
 			{
@@ -83,9 +83,9 @@ namespace Umaru.Core
 				
 				// 读取输出直到看到标记
 				StringBuilder output = new StringBuilder();
-				using (var reader = new BufferedReader(new InputStreamReader(suProcess.InputStream)))
+				using (var reader = new BufferedReader(new InputStreamReader(suProcess?.InputStream)))
 				{
-					string line;
+					string? line;
 					while ((line = reader.ReadLine()) != null)
 					{
 						if (line.Contains(endMarker))
@@ -110,7 +110,7 @@ namespace Umaru.Core
 			return Execute($"screencap -p {System.IO.Path.Combine(FileSystem.AppDataDirectory, path)}");
 		}
 
-		public static Bitmap ReadImg(string path)
+		public static Bitmap? ReadImg(string path)
 		{
 			try
 			{
@@ -129,7 +129,7 @@ namespace Umaru.Core
 					return BitmapFactory.DecodeStream(memoryStream);
 				}
 			}
-			catch (Exception ex)
+			catch
 			{
 				return null;
 			}
@@ -139,14 +139,14 @@ namespace Umaru.Core
 		{
 			try
 			{
-				var process = runtime.Exec("su");
-				using (var outputStream = new DataOutputStream(process.OutputStream))
+				var process = runtime?.Exec("su");
+				using (var outputStream = new DataOutputStream(process?.OutputStream))
 				{
 					outputStream.WriteBytes("exit\n");
 					outputStream.Flush();
 				}
-				process.WaitFor();
-				return process.ExitValue() == 0;
+				process?.WaitFor();
+				return process?.ExitValue() == 0;
 			}
 			catch (IOException)
 			{
@@ -162,14 +162,14 @@ namespace Umaru.Core
 		{
 			try
 			{
-				var process = runtime.Exec("su");
-				using (var outputStream = new DataOutputStream(process.OutputStream))
+				var process = runtime?.Exec("su");
+				using (var outputStream = new DataOutputStream(process?.OutputStream))
 				{
 					outputStream.WriteBytes("exit\n");
 					outputStream.Flush();
 				}
-				process.WaitFor();
-				return process.ExitValue() == 0;
+				process?.WaitFor();
+				return process?.ExitValue() == 0;
 			}
 			catch (IOException)
 			{

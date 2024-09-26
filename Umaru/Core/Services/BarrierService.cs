@@ -16,9 +16,9 @@ namespace Umaru.Core.Services
 	[MetaData("android.accessibilityservice", Resource = "@xml/barrierservice")]
 	public class BarrierService : AccessibilityService
 	{
-		private static List<AccessibilityNodeInfo> _nodes = null;
+		private static List<AccessibilityNodeInfo>? _nodes = null;
 
-		public static BarrierService Instance = null;
+		public static BarrierService? Instance = null;
 
 		public static bool IsTestiness { get; set; } = false;
 
@@ -46,7 +46,7 @@ namespace Umaru.Core.Services
 
 		public static List<AccessibilityNodeInfo> GetNodes()
 		{
-			Instance.GetAllNodes();
+			Instance?.GetAllNodes();
 			// 返回 _nodes 的克隆副本
 			return _nodes != null ? new List<AccessibilityNodeInfo>(_nodes) : new List<AccessibilityNodeInfo>();
 		}
@@ -55,6 +55,8 @@ namespace Umaru.Core.Services
 		{
 			var nodes = new List<AccessibilityNodeInfo>();
 			var windows = Windows;
+			if (windows == null) return;
+
 			foreach (var window in windows)
 			{
 				var rootNode = window.Root;
@@ -76,7 +78,8 @@ namespace Umaru.Core.Services
 
 			for (int i = 0; i < node.ChildCount; i++)
 			{
-				TraverseNode(node.GetChild(i), allNodes);
+				var child = node.GetChild(i);
+				if (child != null) TraverseNode(child, allNodes);
 			}
 		}
 
@@ -95,7 +98,7 @@ namespace Umaru.Core.Services
 			var gestureBuilder = new GestureDescription.Builder();
 			gestureBuilder.AddStroke(new GestureDescription.StrokeDescription(path, 0, 100));
 			var gesture = gestureBuilder.Build();
-			DispatchGesture(gesture, null, null);
+			if (gesture != null) DispatchGesture(gesture, null, null);
 		}
 
 	}

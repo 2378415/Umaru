@@ -13,7 +13,7 @@ namespace Umaru.Core.OCR
 	/// </summary>
 	public class PaddleOCR : IDisposable
 	{
-		RapidOcr _ocrEngin;
+		RapidOcr? _ocrEngin;
 		public PaddleOCR()
 		{
 			_ocrEngin = new RapidOcr();
@@ -32,12 +32,12 @@ namespace Umaru.Core.OCR
 				var path = Path.Combine(FileSystem.AppDataDirectory, targetImg);
 				using (SKBitmap originSrc = SKBitmap.Decode(path))
 				{
-					OcrResult ocrResult = _ocrEngin.Detect(originSrc, RapidOcrOptions.Default);
-					var result = ocrResult.StrRes.Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "");
-					return result;
+					var ocrResult = _ocrEngin?.Detect(originSrc, RapidOcrOptions.Default);
+					var result = ocrResult?.StrRes.Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "");
+					return result ?? string.Empty;
 				}
 			}
-			catch (Exception ex)
+			catch
 			{
 				return string.Empty;
 			}
@@ -56,15 +56,16 @@ namespace Umaru.Core.OCR
 			try
 			{
 				var image = SuperImage.Capture(x, y, w, h);
+				if (image == null) return string.Empty;
 				var buffer = SuperImage.BitmapToByteArray(image);
 				using (SKBitmap originSrc = SKBitmap.Decode(buffer))
 				{
-					OcrResult ocrResult = _ocrEngin.Detect(originSrc, RapidOcrOptions.Default);
-					var result = ocrResult.StrRes.Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "");
-					return result;
+					var ocrResult = _ocrEngin?.Detect(originSrc, RapidOcrOptions.Default);
+					var result = ocrResult?.StrRes.Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "");
+					return result ?? string.Empty;
 				}
 			}
-			catch (Exception ex)
+			catch
 			{
 				return string.Empty;
 			}

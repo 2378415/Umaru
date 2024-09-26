@@ -82,7 +82,7 @@ namespace Umaru
 
 			try
 			{
-				RawUtils.WriteLocalAsync();
+				_ = RawUtils.WriteLocalAsync();
 
 				// 检查并请求权限
 				CheckAndRequestPermissions();
@@ -128,7 +128,9 @@ namespace Umaru
 			}
 			catch (Exception ex)
 			{
+#pragma warning disable CS8602 // 解引用可能出现空引用。
 				Toast.MakeText(this, ex.Message, ToastLength.Short).Show();
+#pragma warning restore CS8602 // 解引用可能出现空引用。
 			}
 
 		}
@@ -152,7 +154,9 @@ namespace Umaru
 			else
 			{
 				// 所有权限已被授予
+#pragma warning disable CS8602 // 解引用可能出现空引用。
 				Toast.MakeText(this, "已获取所有权限", ToastLength.Short).Show();
+#pragma warning restore CS8602 // 解引用可能出现空引用。
 			}
 		}
 
@@ -160,7 +164,7 @@ namespace Umaru
 		{
 			string command = "settings get secure enabled_accessibility_services";
 			var msg = RootUtils.Execute(command);
-			if (msg.Contains("BarrierService") && msg.Contains(PackageName)) return true;
+			if (msg.Contains("BarrierService") && msg.Contains(PackageName ?? string.Empty)) return true;
 			return false;
 		}
 

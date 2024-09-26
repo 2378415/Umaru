@@ -14,6 +14,15 @@ namespace Umaru.Core
 		private static ISuperService? _superService = ServiceLocator.Get<ISuperService>();
 
 		/// <summary>
+		/// 获取当前包名
+		/// </summary>
+		/// <returns></returns>
+		public static string? GetPackageName()
+		{
+			return _superService?.GetPackageName();
+		}
+
+		/// <summary>
 		/// 启动app
 		/// </summary>
 		/// <param name="packageName"></param>
@@ -38,7 +47,7 @@ namespace Umaru.Core
 		/// <param name="y"></param>
 		public static void Tap(int x, int y)
 		{
-			_superService.Tap(x, y);
+			_superService?.Tap(x, y);
 		}
 
 		/// <summary>
@@ -51,7 +60,7 @@ namespace Umaru.Core
 		/// <param name="duration"></param>
 		public static void Swipe(int x1, int y1, int x2, int y2, int duration = 500)
 		{
-			_superService.Swipe(x1, y1, x2, y2, duration);
+			_superService?.Swipe(x1, y1, x2, y2, duration);
 		}
 
 		/// <summary>
@@ -61,7 +70,7 @@ namespace Umaru.Core
 		/// <param name="count"></param>
 		public static void Roll(int index, int count)
 		{
-			_superService.Roll(index, count);
+			_superService?.Roll(index, count);
 		}
 
 		/// <summary>
@@ -70,7 +79,7 @@ namespace Umaru.Core
 		/// <param name="event"></param>
 		public static void KeyEvent(string @event)
 		{
-			_superService.KeyEvent(@event);
+			_superService?.KeyEvent(@event);
 		}
 
 		/// <summary>
@@ -79,7 +88,7 @@ namespace Umaru.Core
 		/// <param name="message"></param>
 		public static void Toast(string message)
 		{
-			_superService.Toast(message);
+			_superService?.Toast(message);
 		}
 
 		/// <summary>
@@ -144,7 +153,7 @@ namespace Umaru.Core
 		/// <returns></returns>
 		public static void ToHome()
 		{
-			_superService.ToHome();
+			_superService?.ToHome();
 		}
 
 		/// <summary>
@@ -153,7 +162,7 @@ namespace Umaru.Core
 		/// <returns></returns>
 		public static void ExitApp()
 		{
-			CloseApp("com.umaru.moper");
+			CloseApp(GetPackageName() ?? string.Empty);
 			System.Environment.Exit(0);
 		}
 

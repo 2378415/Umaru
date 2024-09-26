@@ -34,7 +34,7 @@ namespace Umaru.Core.Yolo
 		/// </summary>
 		/// <param name="imagePath"></param>
 		/// <returns></returns>
-		Bitmap LoadImage(string imagePath)
+		Bitmap? LoadImage(string imagePath)
 		{
 			imagePath = Path.Combine(FileSystem.AppDataDirectory, imagePath);
 			return BitmapFactory.DecodeFile(imagePath);
@@ -43,12 +43,14 @@ namespace Umaru.Core.Yolo
 		public List<Detection> Detect(int x, int y, int w, int h)
 		{
 			var image = SuperImage.Capture(x, y, w, h);
+			if (image == null) return new List<Detection>();
 			return Detect(image);
 		}
 
 		public List<Detection> Detect(string imagePath)
 		{
 			var image = LoadImage(imagePath);
+			if (image == null) return new List<Detection>();
 			return Detect(image);
 		}
 

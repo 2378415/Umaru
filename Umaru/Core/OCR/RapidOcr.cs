@@ -132,8 +132,8 @@ namespace Umaru.Core.OCR
 					AngleIndex = angle.Index,
 					AngleScore = angle.Score,
 					AngleTime = angle.Time,
-					Chars = textLine.Chars,
-					CharScores = textLine.CharScores,
+					Chars = textLine.Chars ?? Array.Empty<string>(),
+					CharScores = textLine.CharScores ?? Array.Empty<float>(),
 					CrnnTime = textLine.Time,
 					BlockTime = angle.Time + textLine.Time
 				};

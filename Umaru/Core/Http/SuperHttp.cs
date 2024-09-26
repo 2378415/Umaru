@@ -14,6 +14,7 @@ namespace Umaru.Core.Http
 		public static string Post(string url, string json = "")
 		{
 			var factory = ServiceLocator.Get<IHttpClientFactory>();
+			if (factory == null) return string.Empty;
 			var client = factory.CreateClient("IgnoreSSL");
 			var postContent = string.IsNullOrEmpty(json) ? new StringContent("{}", Encoding.UTF8, "application/json") : new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -35,6 +36,7 @@ namespace Umaru.Core.Http
 		public static string Get(string url)
 		{
 			var factory = ServiceLocator.Get<IHttpClientFactory>();
+			if (factory == null) return string.Empty;
 			var client = factory.CreateClient("IgnoreSSL");
 
 			var request = new HttpRequestMessage(HttpMethod.Get, url);

@@ -17,9 +17,9 @@ namespace Umaru.Core.OCR
         private const int CrnnDstHeight = 48;
         //private const int CrnnCols = 6625;
 
-        private InferenceSession _crnnNet;
-        private string[] _keys;
-        private string _inputName;
+        private InferenceSession? _crnnNet;
+        private string[] _keys = Array.Empty<string>();
+        private string _inputName = string.Empty;
 
         public void InitModel(string path, string keysPath, int numThread)
         {
@@ -93,15 +93,18 @@ namespace Umaru.Core.OCR
 
             try
             {
-                using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _crnnNet.Run(inputs))
+                if (_crnnNet != null)
                 {
-                    var result = results[0];
-                    var dimensions = result.AsTensor<float>().Dimensions;
-                    ReadOnlySpan<float> outputData = result.AsEnumerable<float>().ToArray();
+                    using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _crnnNet.Run(inputs))
+                    {
+                        var result = results[0];
+                        var dimensions = result.AsTensor<float>().Dimensions;
+                        ReadOnlySpan<float> outputData = result.AsEnumerable<float>().ToArray();
 
-                    var tl = ScoreToTextLine(outputData, dimensions[1], dimensions[2]);
-                    tl.Time = sw.ElapsedMilliseconds;
-                    return tl;
+                        var tl = ScoreToTextLine(outputData, dimensions[1], dimensions[2]);
+                        tl.Time = sw.ElapsedMilliseconds;
+                        return tl;
+                    }
                 }
             }
             catch (Exception ex)
@@ -151,7 +154,7 @@ namespace Umaru.Core.OCR
 
         public void Dispose()
         {
-            _crnnNet.Dispose();
+            _crnnNet?.Dispose();
         }
     }
 }

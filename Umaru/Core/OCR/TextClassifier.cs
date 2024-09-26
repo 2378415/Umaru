@@ -17,8 +17,8 @@ namespace Umaru.Core.OCR
         private readonly float[] _meanValues = [127.5F, 127.5F, 127.5F];
         private readonly float[] _normValues = [1.0F / 127.5F, 1.0F / 127.5F, 1.0F / 127.5F];
 
-        private InferenceSession _angleNet;
-        private string _inputName;
+        private InferenceSession? _angleNet;
+        private string _inputName = string.Empty;
 
         public void InitModel(string path, int numThread)
         {
@@ -92,12 +92,15 @@ namespace Umaru.Core.OCR
 
             try
             {
-                using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _angleNet.Run(inputs))
+                if (_angleNet != null)
                 {
-                    ReadOnlySpan<float> outputData = results[0].AsEnumerable<float>().ToArray();
-                    var angle = ScoreToAngle(outputData, AngleCols);
-                    angle.Time = sw.ElapsedMilliseconds;
-                    return angle;
+                    using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _angleNet.Run(inputs))
+                    {
+                        ReadOnlySpan<float> outputData = results[0].AsEnumerable<float>().ToArray();
+                        var angle = ScoreToAngle(outputData, AngleCols);
+                        angle.Time = sw.ElapsedMilliseconds;
+                        return angle;
+                    }
                 }
             }
             catch (Exception ex)
@@ -133,7 +136,7 @@ namespace Umaru.Core.OCR
 
         public void Dispose()
         {
-            _angleNet.Dispose();
+            _angleNet?.Dispose();
         }
     }
 }

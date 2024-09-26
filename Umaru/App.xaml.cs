@@ -31,7 +31,7 @@ namespace Umaru
 			FloatingService.Stop();
 		}
 
-        private void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object? sender, EventArgs e)
         {
 
         }

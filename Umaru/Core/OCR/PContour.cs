@@ -179,7 +179,7 @@ namespace Umaru.Core.OCR
             /// <summary>
             /// Vertices.
             /// </summary>
-            internal List<SKPoint> points;
+            internal List<SKPoint> points = Array.Empty<SKPoint>().ToList();
 
             /// <summary>
             /// Unique ID, starts from 2.

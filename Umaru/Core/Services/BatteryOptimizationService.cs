@@ -21,7 +21,7 @@ namespace Umaru.Core.Services
 
 	public class BatteryOptimizationService : IBatteryOptimizationService
 	{
-		public event EventHandler<BatteryOptimizationEventArgs> BatteryStatusChanged;
+		public event EventHandler<BatteryOptimizationEventArgs>? BatteryStatusChanged;
 
 		public void StartMonitoring()
 		{

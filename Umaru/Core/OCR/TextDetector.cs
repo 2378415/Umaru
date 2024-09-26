@@ -15,8 +15,8 @@ namespace Umaru.Core.OCR
         private readonly float[] MeanValues = [0.485F * 255F, 0.456F * 255F, 0.406F * 255F];
         private readonly float[] NormValues = [1.0F / 0.229F / 255.0F, 1.0F / 0.224F / 255.0F, 1.0F / 0.225F / 255.0F];
 
-        private InferenceSession _dbNet;
-        private string _inputName;
+        private InferenceSession? _dbNet;
+        private string _inputName = string.Empty;
 
         public void InitModel(string path, int numThread)
         {
@@ -52,18 +52,22 @@ namespace Umaru.Core.OCR
 
             try
             {
-                using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _dbNet.Run(inputs))
+                if (_dbNet != null)
                 {
-                    return GetTextBoxes(results[0], scale.DstHeight, scale.DstWidth, scale, boxScoreThresh,
-                        boxThresh, unClipRatio);
+                    using (IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _dbNet.Run(inputs))
+                    {
+                        return GetTextBoxes(results[0], scale.DstHeight, scale.DstWidth, scale, boxScoreThresh,
+                            boxThresh, unClipRatio);
+                    }
                 }
+                
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message + ex.StackTrace);
             }
 
-            return null;
+            return Array.Empty<TextBox>();
         }
 
         private static SKPoint[][] FindContours(byte[] array, int rows, int cols)
@@ -475,7 +479,7 @@ namespace Umaru.Core.OCR
 
         public void Dispose()
         {
-            _dbNet.Dispose();
+            _dbNet?.Dispose();
         }
     }
 }

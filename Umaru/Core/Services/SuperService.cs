@@ -23,11 +23,17 @@ namespace Umaru.Core.Services
 {
 	public class SuperService : ISuperService
 	{
+		public string? GetPackageName()
+		{
+			Context context = Application.Context;
+			return context.PackageName;
+		}
+
 		public void LaunchApp(string packageName)
 		{
 			var context = Application.Context;
 			var pm = context.PackageManager;
-			var launchIntent = pm.GetLaunchIntentForPackage(packageName);
+			var launchIntent = pm?.GetLaunchIntentForPackage(packageName);
 			if (launchIntent != null)
 			{
 				context.StartActivity(launchIntent);
@@ -73,7 +79,9 @@ namespace Umaru.Core.Services
 			var context = Android.App.Application.Context;
 			MainThread.BeginInvokeOnMainThread(() =>
 			{
+#pragma warning disable CS8602 // 解引用可能出现空引用。
 				Android.Widget.Toast.MakeText(context, message, ToastLength.Short).Show();
+#pragma warning restore CS8602 // 解引用可能出现空引用。
 			});
 		}
 
@@ -83,9 +91,9 @@ namespace Umaru.Core.Services
 			{
 				FloatingService.Stop();
 				// 获取包名
-				string packageName = Application.Context.PackageName;
+				//var packageName = Application.Context.PackageName;
 				// 获取主活动的类名
-				string mainActivityClassName = "Umaru.MainActivity"; // 更新为你的主活动类名
+				//var mainActivityClassName = "Umaru.MainActivity"; // 更新为你的主活动类名
 
 				// 构建 Intent
 				Intent intent = new Intent(Application.Context, typeof(MainActivity));
@@ -94,10 +102,10 @@ namespace Umaru.Core.Services
 				intent.AddFlags(ActivityFlags.ReorderToFront | ActivityFlags.ClearTop | ActivityFlags.SingleTop);
 
 				// 构建 PendingIntent
-				PendingIntent pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.UpdateCurrent);
+				var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.UpdateCurrent);
 
 				// 发送 PendingIntent
-				pendingIntent.Send();
+				pendingIntent?.Send();
 			}
 			catch (Exception ex)
 			{
