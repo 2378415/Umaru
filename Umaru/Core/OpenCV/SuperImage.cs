@@ -75,7 +75,7 @@ namespace Umaru.Core.OpenCV
 		}
 
 		/// <summary>
-		/// 使用CcorrNormed 查找图片，低于0.9都不能信
+		/// 使用CcorrNormed 查找图片，低于0.9都不能信 透明色 FF00FF
 		/// </summary>
 		/// <param name="x">左上角X</param>
 		/// <param name="y">左上角Y</param>
