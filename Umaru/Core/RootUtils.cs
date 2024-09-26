@@ -1,16 +1,6 @@
 ﻿using Android.Graphics;
-using Android.OS;
-using Android.Util;
-using Android.Views.Accessibility;
-using Emgu.CV.Freetype;
 using Java.IO;
 using Java.Lang;
-using Kotlin.System;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Exception = Java.Lang.Exception;

@@ -1,9 +1,4 @@
-﻿using Android.Content;
-using Android.Content.PM;
-using Android.OS;
-using Android.Widget;
-using Microsoft.Maui.Controls;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using Emgu.CV;

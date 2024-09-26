@@ -1,30 +1,9 @@
-﻿using Android.Graphics;
-using Android.Hardware.Lights;
-using Android.Media.Projection;
-using Android.Media;
-using Android.Util;
-using Android.Views;
-using Microsoft.Maui.Media;
-using System.IO;
-using System.Threading.Tasks;
-using Umaru.Core.OpenCV;
-using Umaru.Core.Services;
-using static Android.Icu.Text.ListFormatter;
-using Color = Android.Graphics.Color;
-using Window = Android.Views.Window;
-using Android.Content;
-using Android.App;
-using Stream = System.IO.Stream;
-using System.Diagnostics;
-using Google.Android.Material.Shape;
-using static Android.AccessibilityServices.AccessibilityService;
-using Application = Android.App.Application;
+﻿using Umaru.Core.OpenCV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV;
 using Point = System.Drawing.Point;
 using System.Drawing;
-using Size = System.Drawing.Size;
 using Bitmap = Android.Graphics.Bitmap;
 
 [assembly: Dependency(typeof(SuperImage))]

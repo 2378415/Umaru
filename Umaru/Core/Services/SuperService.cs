@@ -1,21 +1,9 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Views;
-using Java.Lang;
-using Java.Net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application = Android.App.Application;
 using Exception = System.Exception;
 using Umaru.Core.Services;
 using Android.Widget;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
-using Platform = Microsoft.Maui.ApplicationModel.Platform;
-using Android.AccessibilityServices;
 
 
 [assembly: Dependency(typeof(SuperService))]

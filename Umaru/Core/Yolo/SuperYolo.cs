@@ -1,16 +1,10 @@
 ﻿using Android.Graphics;
-using Emgu.CV;
-using Emgu.CV.Dnn;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System.Drawing;
-using System.Text.Json;
 using Umaru.Core.OpenCV;
 using Bitmap = Android.Graphics.Bitmap;
 using Path = System.IO.Path;
-using Size = System.Drawing.Size;
 
 namespace Umaru.Core.Yolo
 {

@@ -1,31 +1,17 @@
-﻿using Android.Animation;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Graphics.Drawables.Shapes;
 using Android.OS;
 using Android.Runtime;
-using Android.Text.Method;
 using Android.Util;
 using Android.Views;
-using Android.Webkit;
 using Android.Widget;
-using AndroidX.Core.App;
 using AndroidX.Core.Content;
-using AndroidX.Core.View;
-using Java.Lang;
-using System.Diagnostics;
 using Application = Android.App.Application;
-using Button = Android.Widget.Button;
 using Color = Android.Graphics.Color;
-using Exception = Java.Lang.Exception;
-using Process = Java.Lang.Process;
-using Resource = Microsoft.Maui.Resource;
 using View = Android.Views.View;
-using WebView = Android.Webkit.WebView;
-using Window = Android.Views.Window;
 
 namespace Umaru.Core.Services
 {

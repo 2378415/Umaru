@@ -3,11 +3,6 @@ using Android.App;
 using Android.Content;
 using Android.Util;
 using Android.Views.Accessibility;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Action = System.Action;
 
 namespace Umaru.Core.Services
 {

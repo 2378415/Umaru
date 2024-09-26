@@ -1,11 +1,8 @@
 ﻿using Umaru.Core.Services;
-using Application = Android.App.Application;
 using Umaru.Core.OpenCV;
 using Umaru.Core.Http;
-using GoogleGson;
 using Point = System.Drawing.Point;
 using Umaru.Core.Store;
-using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace Umaru.Core
 {
