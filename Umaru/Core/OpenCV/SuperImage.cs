@@ -39,7 +39,9 @@ namespace Umaru.Core.OpenCV
 			var tempPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, filePath);
 			using (var stream = new FileStream(tempPath, FileMode.Create))
 			{
+#pragma warning disable CS8604 // 引用类型参数可能为 null。
 				bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+#pragma warning restore CS8604 // 引用类型参数可能为 null。
 			}
 		}
 
@@ -48,7 +50,9 @@ namespace Umaru.Core.OpenCV
 			using (var stream = new MemoryStream())
 			{
 				// 将 Bitmap 压缩为 PNG 格式并写入内存流
+#pragma warning disable CS8604 // 引用类型参数可能为 null。
 				bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+#pragma warning restore CS8604 // 引用类型参数可能为 null。
 				return stream.ToArray();
 			}
 		}

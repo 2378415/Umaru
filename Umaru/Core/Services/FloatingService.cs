@@ -123,8 +123,9 @@ namespace Umaru.Core.Services
 		public void LoadDisplayMetrics()
 		{
 			_displayMetrics = new DisplayMetrics();
-
+#pragma warning disable CA1422 // 验证平台兼容性
 			_windowManager?.DefaultDisplay?.GetMetrics(_displayMetrics);
+#pragma warning restore CA1422 // 验证平台兼容性
 		}
 
 		public void BuildAvatar()
@@ -142,7 +143,9 @@ namespace Umaru.Core.Services
 			((ImageView)_avatarView).SetImageResource(Resource.Drawable.avatar_c);
 
 			//头像宽高
+#pragma warning disable CA1416 // 验证平台兼容性
 			_layoutParams = new WindowManagerLayoutParams(90, 90, Build.VERSION.SdkInt >= BuildVersionCodes.O ? WindowManagerTypes.ApplicationOverlay : WindowManagerTypes.Phone, WindowManagerFlags.NotFocusable, Format.Translucent);
+#pragma warning restore CA1416 // 验证平台兼容性
 			_layoutParams.Gravity = GravityFlags.Top | GravityFlags.Left;
 			_layoutParams.X = 0;
 			_layoutParams.Y = 100;
@@ -295,6 +298,7 @@ namespace Umaru.Core.Services
 			}
 
 			//构建样式
+#pragma warning disable CA1416 // 验证平台兼容性
 			var menuLayoutParams = new WindowManagerLayoutParams(
 				ViewGroup.LayoutParams.WrapContent,
 				ViewGroup.LayoutParams.WrapContent,
@@ -307,6 +311,7 @@ namespace Umaru.Core.Services
 				X = _layoutParams == null ? 0 : _layoutParams.X > 0 ? (_layoutParams.X + 10) : 10, // Adjust X position to center relative to _floatingView
 				Y = _layoutParams == null ? 0 : _layoutParams.Y + 100 // Adjust Y position to show below the floating view
 			};
+#pragma warning restore CA1416 // 验证平台兼容性
 
 			_windowManager?.AddView(_menuLayout, menuLayoutParams);
 			_isMenuLayoutVisible = true;
