@@ -54,7 +54,7 @@ namespace Umaru.Core.OpenCV
 		}
 
 		/// <summary>
-		/// 使用CcorrNormed 查找图片，低于0.9都不能信 透明色 FF00FF
+		/// 使用CcorrNormed 查找图片，低于0.95都不能信 透明色 FF00FF
 		/// </summary>
 		/// <param name="x">左上角X</param>
 		/// <param name="y">左上角Y</param>
@@ -92,12 +92,12 @@ namespace Umaru.Core.OpenCV
 				// 检查最大相似度是否大于等于指定的相似度
 				if (maxVal >= sim && maxVal <= 1)
 				{
-					// 在匹配到的位置绘制矩形框
-					Rectangle matchRect = new Rectangle(maxLoc, templateImage.Size);
-					screenImage.Draw(matchRect, new Bgr(0, 150, 136), 2);
+					//// 在匹配到的位置绘制矩形框
+					//Rectangle matchRect = new Rectangle(maxLoc, templateImage.Size);
+					//screenImage.Draw(matchRect, new Bgr(0, 150, 136), 2);
 
-					// 将结果图像保存到本地
-					SaveToFile(screenImage.ToBitmap(), "MatchResult.png");
+					//// 将结果图像保存到本地
+					//SaveToFile(screenImage.ToBitmap(), "MatchResult.png");
 					return new Point(maxLoc.X + x, maxLoc.Y + y);
 				}
 			}
