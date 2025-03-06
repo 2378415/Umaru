@@ -23,10 +23,10 @@ namespace Umaru.Core.Store
             return _database.Table<SqliteModel>().ToListAsync().Result;
         }
 
-        public SqliteModel GetItem(int id)
-        {
-            return _database.Table<SqliteModel>().FirstAsync((t) => t.Id == id).Result;
-        }
+        //public SqliteModel GetItem(int id)
+        //{
+        //    return _database.Table<SqliteModel>().FirstAsync((t) => t.Id == id).Result;
+        //}
 
         public SqliteModel GetItem(string key)
         {
@@ -36,6 +36,12 @@ namespace Umaru.Core.Store
 
         public int SaveItem(SqliteModel item)
         {
+            if (item.Id == 0)
+            {
+                var res = _database.Table<SqliteModel>().FirstOrDefaultAsync((t) => t.Key == item.Key).Result;
+                if (res != null) item.Id = res.Id;
+            }
+
             if (item.Id != 0)
             {
                 return _database.UpdateAsync(item).Result;
@@ -50,6 +56,11 @@ namespace Umaru.Core.Store
         public int DeleteItem(SqliteModel item)
         {
             return _database.DeleteAsync(item).Result;
+        }
+
+        public void Clear()
+        {
+            _database.DeleteAllAsync<SqliteModel>().Wait();
         }
 
         public static SuperSqlite Instance = new SuperSqlite(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SuperSqlite.db"));

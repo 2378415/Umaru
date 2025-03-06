@@ -26,13 +26,14 @@ namespace Umaru
 			//电池优化服务
 			builder.Services.AddSingleton<IBatteryOptimizationService, BatteryOptimizationService>();
 
-			//添加httpclient 忽略ssl
-			builder.Services.AddHttpClient("IgnoreSSL").ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
-			{
-				ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-			});
+            // 添加 HttpClient 忽略 SSL
+            builder.Services.AddHttpClient("IgnoreSSL")
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                });
 
-			builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddMauiBlazorWebView();
             builder.Services.AddMudServices();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
